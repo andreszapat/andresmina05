@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grupos de Investigación</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .grupo-item { cursor: pointer; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body class="container py-4">
+  <h1 class="mb-4">Gestión de Grupos de Investigación</h1>
+
+  <!-- Lista de grupos -->
+  <div class="mb-4">
+    <h2>Grupos de investigación</h2>
+    <ul id="listaGrupos" class="list-group">
+      <!-- Se llenará dinámicamente -->
+    </ul>
+  </div>
+
+  <!-- Detalles del grupo seleccionado -->
+  <div id="infoGrupo" class="mb-4 hidden">
+    <h3>Información del grupo</h3>
+    <p><strong>Nombre:</strong> <span id="grupoNombre"></span></p>
+    <p><strong>Objetivos:</strong> <span id="grupoObjetivos"></span></p>
+    <p><strong>Director:</strong> <span id="grupoDirector"></span></p>
+    <h4>Actividades registradas</h4>
+    <ul id="listaActividades" class="list-group mb-2">
+      <!-- actividades del grupo -->
+    </ul>
+  </div>
+
+  <hr>
+
+  <!-- Registrar docente investigador -->
+  <h2>Registrar Docente Investigador</h2>
+  <form id="formDocente" class="needs-validation mb-4" novalidate>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label for="nombreDocente" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="nombreDocente" name="nombre" required>
+        <div class="invalid-feedback">Ingrese el nombre del docente.</div>
+      </div>
+      <div class="col-md-6">
+        <label for="formacionDocente" class="form-label">Formación académica</label>
+        <input type="text" class="form-control" id="formacionDocente" name="formacion" required>
+        <div class="invalid-feedback">Ingrese la formación académica.</div>
+      </div>
+      <div class="col-md-6">
+        <label for="horarioDocente" class="form-label">Horario de atención</label>
+        <input type="text" class="form-control" id="horarioDocente" name="horario" required>
+        <div class="invalid-feedback">Ingrese el horario de atención.</div>
+      </div>
+      <div class="col-md-6">
+        <label for="grupoDocenteSelect" class="form-label">Grupo asignado</label>
+        <select class="form-select" id="grupoDocenteSelect" name="grupo" required>
+          <option value="" disabled selected>Seleccione grupo</option>
+          <option value="COMBA I+D">COMBA I+D</option>
+          <option value="GIEIAM">GIEIAM</option>
+        </select>
+        <div class="invalid-feedback">Seleccione un grupo.</div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success mt-3">Registrar Docente</button>
+  </form>
+
+  <hr>
+
+  <!-- Vincular estudiante a semillero (COMBA I+D) -->
+  <h2>Vincular Estudiante a Semillero (COMBA I+D)</h2>
+  <form id="formEstudiante" class="needs-validation mb-4" novalidate>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label for="nombreEstudiante" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="nombreEstudiante" name="nombre" required>
+        <div class="invalid-feedback">Ingrese nombre del estudiante.</div>
+      </div>
+      <div class="col-md-6">
+        <label for="codigoEstudiante" class="form-label">Código</label>
+        <input type="text" class="form-control" id="codigoEstudiante" name="codigo" required>
+        <div class="invalid-feedback">Ingrese código del estudiante.</div>
+      </div>
+      <div class="col-md-6">
+        <label for="carreraEstudiante" class="form-label">Carrera</label>
+        <input type="text" class="form-control" id="carreraEstudiante" name="carrera" required>
+        <div class="invalid-feedback">Ingrese la carrera del estudiante.</div>
+      </div>
+      <div class="col-md-6">
+        <label for="semilleroEstudiante" class="form-label">Semillero</label>
+        <select class="form-select" id="semilleroEstudiante" name="semillero" required>
+          <option value="" disabled selected>Seleccione semillero</option>
+          <option value="Comba">Comba</option>
+          <option value="Informa">Informa</option>
+        </select>
+        <div class="invalid-feedback">Seleccione semillero.</div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-warning mt-3">Vincular Estudiante</button>
+  </form>
+
+  <hr>
+
+  <!-- Agregar actividad a semillero -->
+  <h2>Agregar Actividad a Semillero</h2>
+  <form id="formActividad" class="needs-validation mb-4" novalidate>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <label for="tipoActividad" class="form-label">Tipo de actividad</label>
+        <select class="form-select" id="tipoActividad" name="tipo" required>
+          <option value="" disabled selected>Seleccione tipo</option>
+          <option value="Taller">Taller</option>
+          <option value="Conferencia">Conferencia</option>
+          <option value="Evento">Evento</option>
+        </select>
+        <div class="invalid-feedback">Seleccione tipo de actividad.</div>
+      </div>
+      <div class="col-md-4">
+        <label for="fechaActividad" class="form-label">Fecha</label>
+        <input type="date" class="form-control" id="fechaActividad" name="fecha" required>
+        <div class="invalid-feedback">Ingrese fecha.</div>
+      </div>
+      <div class="col-md-4">
+        <label for="horaActividad" class="form-label">Hora</label>
+        <input type="time" class="form-control" id="horaActividad" name="hora" required>
+        <div class="invalid-feedback">Ingrese hora.</div>
+      </div>
+      <div class="col-md-6">
+        <label for="limiteActividad" class="form-label">Límite de asistentes</label>
+        <input type="number" class="form-control" id="limiteActividad" name="limite" required min="1">
+        <div class="invalid-feedback">Ingrese número mayor o igual a 1.</div>
+      </div>
+      <div class="col-md-6">
+        <label for="resumenActividad" class="form-label">Resumen</label>
+        <textarea class="form-control" id="resumenActividad" name="resumen" rows="3" required></textarea>
+        <div class="invalid-feedback">Ingrese resumen de la actividad.</div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-info mt-3">Agregar Actividad</button>
+  </form>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const grupos = [
+        {
+          id: 'COMBA I+D',
+          nombre: 'COMBA I+D',
+          objetivos: 'Desarrollo tecnológico, innovación y aplicaciones prácticas.',
+          director: 'Dr. Juan Pérez',
+          actividades: []
+        },
+        {
+          id: 'GIEIAM',
+          nombre: 'GIEIAM',
+          objetivos: 'Investigación en inteligencia artificial y modelado matemático.',
+          director: 'Dra. María Rodríguez',
+          actividades: []
+        }
+      ];
+
+      const listaGruposEl = document.getElementById('listaGrupos');
+      const infoGrupoEl = document.getElementById('infoGrupo');
+      const grupoNombreEl = document.getElementById('grupoNombre');
+      const grupoObjetivosEl = document.getElementById('grupoObjetivos');
+      const grupoDirectorEl = document.getElementById('grupoDirector');
+      const listaActividadesEl = document.getElementById('listaActividades');
+
+      let grupoSeleccionado = null;
+
+      function renderListaGrupos() {
+        listaGruposEl.innerHTML = '';
+        grupos.forEach(g => {
+          const li = document.createElement('li');
+          li.className = 'list-group-item grupo-item';
+          li.textContent = g.nombre;
+          li.dataset.grupoId = g.id;
+          listaGruposEl.appendChild(li);
+        });
+      }
+
+      function mostrarInfoGrupo(grupoId) {
+        const g = grupos.find(gr => gr.id === grupoId);
+        if (!g) return;
+        grupoSeleccionado = g;
+        grupoNombreEl.textContent = g.nombre;
+        grupoObjetivosEl.textContent = g.objetivos;
+        grupoDirectorEl.textContent = g.director;
+        renderActividades(g);
+        infoGrupoEl.classList.remove('hidden');
+      }
+
+      function renderActividades(grupo) {
+        listaActividadesEl.innerHTML = '';
+        if (grupo.actividades.length === 0) {
+          const li = document.createElement('li');
+          li.className = 'list-group-item';
+          li.textContent = 'No hay actividades registradas.';
+          listaActividadesEl.appendChild(li);
+        } else {
+          grupo.actividades.forEach(act => {
+            const li = document.createElement('li');
+            li.className = 'list-group-item';
+            // Asegurar que act.hora esté definido
+            const horaText = act.hora ? act.hora : '';
+            li.innerHTML = `<strong>${act.tipo}</strong> · ${act.fecha} ${horaText} · Límite: ${act.limite} asistentes<br>${act.resumen}`;
+            listaActividadesEl.appendChild(li);
+          });
+        }
+      }
+
+      renderListaGrupos();
+
+      listaGruposEl.addEventListener('click', (e) => {
+        const li = e.target.closest('li.grupo-item');
+        if (!li) return;
+        const gid = li.dataset.grupoId;
+        mostrarInfoGrupo(gid);
+      });
+
+      function validarFormulario(form) {
+        form.classList.add('was-validated');
+        return form.checkValidity();
+      }
+
+      async function postData(url = '', data = {}) {
+        const resp = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+          },
+          body: JSON.stringify(data)
+        });
+        if (!resp.ok) {
+          throw new Error('Error en POST: ' + resp.status);
+        }
+        const json = await resp.json();
+        return json;
+      }
+
+      // Registrar docente
+      document.getElementById('formDocente').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        if (!validarFormulario(form)) return;
+
+        const data = {
+          nombre: form.nombre.value.trim(),
+          formacion: form.formacion.value.trim(),
+          horario: form.horario.value.trim(),
+          grupo: form.grupo.value
+        };
+
+        try {
+          const result = await postData('https://jsonplaceholder.typicode.com/posts', data);
+          console.log('Docente registrado:', result);
+          alert('Docente registrado correctamente. ID simulado: ' + result.id);
+          form.reset();
+          form.classList.remove('was-validated');
+        } catch (err) {
+          console.error('Error al registrar docente:', err);
+          alert('Error al registrar docente: ' + err.message);
+        }
+      });
+
+      // Vincular estudiante
+      document.getElementById('formEstudiante').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        if (!validarFormulario(form)) return;
+
+        const data = {
+          nombre: form.nombre.value.trim(),
+          codigo: form.codigo.value.trim(),
+          carrera: form.carrera.value.trim(),
+          semillero: form.semillero.value,
+          grupo: 'COMBA I+D'
+        };
+
+        try {
+          const result = await postData('https://jsonplaceholder.typicode.com/posts', data);
+          console.log('Estudiante vinculado:', result);
+          alert('Estudiante vinculado correctamente. ID simulado: ' + result.id);
+          form.reset();
+          form.classList.remove('was-validated');
+        } catch (err) {
+          console.error('Error al vincular estudiante:', err);
+          alert('Error al vincular estudiante: ' + err.message);
+        }
+      });
+
+      // Agregar actividad
+      document.getElementById('formActividad').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        if (!validarFormulario(form)) return;
+
+        if (!grupoSeleccionado) {
+          alert('Primero seleccione un grupo.');
+          return;
+        }
+
+        const data = {
+          tipo: form.tipo.value,
+          fecha: form.fecha.value,
+          hora: form.hora.value,  // hora puede estar vacía? pero requerido obliga a llenarla
+          limite: parseInt(form.limite.value, 10),
+          resumen: form.resumen.value.trim(),
+          grupo: grupoSeleccionado.id
+        };
+
+        try {
+          const result = await postData('https://jsonplaceholder.typicode.com/posts', data);
+          console.log('Actividad registrada:', result);
+          // agregar localmente
+          grupoSeleccionado.actividades.push(data);
+          renderActividades(grupoSeleccionado);
+          alert('Actividad agregada correctamente. ID simulado: ' + result.id);
+          form.reset();
+          form.classList.remove('was-validated');
+        } catch (err) {
+          console.error('Error al agregar actividad:', err);
+          alert('Error al agregar actividad: ' + err.message);
+        }
+      });
+
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
